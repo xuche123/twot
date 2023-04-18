@@ -1,13 +1,18 @@
 import { useRouter } from "next/router"
 import { RxArrowLeft } from "react-icons/rx"
+import useCurrentUser from "@/hooks/useCurrentUser"
+import useShouldFetch from "@/hooks/useShouldFetch"
 
 type Props = {
   label: string
   back?: boolean
 }
 
-const Header = ({label, back}: Props) => {
+const Header = ({ label, back }: Props) => {
+  const { shouldFetch } = useShouldFetch();
   const router = useRouter()
+  const { data: currentUser } = useCurrentUser(shouldFetch);
+
   const handleBack = () => {
     router.push("/")
   }
@@ -19,7 +24,7 @@ const Header = ({label, back}: Props) => {
             <RxArrowLeft size={28} color="white" />
           </div>
         )}
-      <h1 className="text-white text-semibold text-xl">{label}</h1>
+        <h1 className="text-white text-semibold text-xl">{label} {currentUser?.name}</h1>
       </div>
 
     </div>

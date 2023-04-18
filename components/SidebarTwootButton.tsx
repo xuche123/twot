@@ -1,12 +1,22 @@
 import { useRouter } from "next/router"
 import { RxPencil1 } from "react-icons/rx"
+import { useCallback } from "react"
+import useLoginModal from "@/hooks/useLoginModal"
 
 type Props = {}
 
 const SidebarTwootButton = ({}: Props) => {
   const router = useRouter()
+  const loginModal = useLoginModal()
+  const onClick = useCallback(
+    () => {
+      loginModal.open()
+    },
+    [loginModal],
+  )
+  
   return (
-    <div onClick={() => router.push("/")}>
+    <div onClick={onClick}>
       {/*mobile view: only show the icon */}
       <div className="mt-6 lg:hidden rounded-full h-14 w-14 p-4 flex items-center justify-center bg-sky-500 hover:bg-opacity-80 transition cursor-pointer">
         <RxPencil1 size={28} color="white" />

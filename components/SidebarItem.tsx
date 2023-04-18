@@ -1,15 +1,28 @@
+import router from "next/router"
+import { useCallback } from "react"
 import { IconType } from "react-icons/lib"
 
 type Props = {
   label: string
-  href: string
+  href?: string
   icon: IconType
   onClick?: () => void
 }
 
-const SidebarItem = ({label, href, icon:Icon, onClick}: Props) => {
+
+const SidebarItem = ({ label, href, icon: Icon, onClick }: Props) => {
+  const handleClick = useCallback(
+  () => {
+    if (onClick) {
+      onClick()
+    }
+    if (href) {
+      router.push(href)  
+    }
+  },[href, onClick],)
+
   return (
-    <div className="flex flex-row items-center">
+    <div onClick={handleClick} className="flex flex-row items-center">
       {/* mobile display: show only icons */}
       <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer lg:hidden">
         <Icon size={28} color="white" />
