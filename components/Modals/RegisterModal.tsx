@@ -13,7 +13,6 @@ import { useToast } from "@/hooks/useToast";
 const RegisterModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const fetchCurrent = useShouldFetch();
   const { toast } = useToast();
 
   const [email, setEmail] = useState('');
@@ -55,9 +54,6 @@ const RegisterModal = () => {
         password,
       });
 
-      fetchCurrent.yesFetch();
-      console.log(fetchCurrent.shouldFetch)
-
       registerModal.close();
     } catch (error) { 
         toast({
@@ -68,7 +64,7 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [email, password, username, name, toast, fetchCurrent, registerModal]);
+  }, [email, password, username, name, toast, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">

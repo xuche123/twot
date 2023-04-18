@@ -1,7 +1,6 @@
 import { useRouter } from "next/router"
 import { RxArrowLeft } from "react-icons/rx"
 import useCurrentUser from "@/hooks/useCurrentUser"
-import useShouldFetch from "@/hooks/useShouldFetch"
 
 type Props = {
   label: string
@@ -9,9 +8,8 @@ type Props = {
 }
 
 const Header = ({ label, back }: Props) => {
-  const { shouldFetch } = useShouldFetch();
   const router = useRouter()
-  const { data: currentUser } = useCurrentUser(shouldFetch);
+  const { data: currentUser } = useCurrentUser();
 
   const handleBack = () => {
     router.push("/")

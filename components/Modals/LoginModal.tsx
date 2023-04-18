@@ -4,7 +4,7 @@ import { useToast } from "@/hooks/useToast";
 
 import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
-import useShouldFetch from "@/hooks/useShouldFetch";
+
 
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
@@ -12,7 +12,7 @@ import Modal from "@/components/ui/Modal";
 const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-  const fetchCurrent = useShouldFetch();
+
   const { toast } = useToast();
 
   const [email, setEmail] = useState('');
@@ -34,7 +34,6 @@ const LoginModal = () => {
       }
 
       loginModal.close();
-      fetchCurrent.yesFetch();
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -44,7 +43,7 @@ const LoginModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [email, password, loginModal, fetchCurrent, toast]);
+  }, [email, password, loginModal, toast]);
 
   const onToggle = useCallback(() => {
     loginModal.close();

@@ -5,11 +5,9 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 import SidebarItem from './SidebarItem';
 import SidebarLogo from './SidebarLogo';
 import SidebarTweetButton from './SidebarTwootButton';
-import useShouldFetch from '@/hooks/useShouldFetch';
 
 const Sidebar = () => {
-  const { shouldFetch } = useShouldFetch();
-  const { data: currentUser } = useCurrentUser(shouldFetch);
+  const { data: currentUser } = useCurrentUser();
 
   const items = [
     {
