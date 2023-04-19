@@ -12,6 +12,10 @@ import Modal from "../ui/Modal";
 
 import ImageUpload from "../ImageUpload";
 
+/*
+TODO : Right now request is limited to 1mb, need to increase it.
+       Implement functionality to allow user to crop/resize/reposition image.
+*/
 const EditModal = () => {
   const session = useSession();
   const { mutate: mutateFetchedUser } = useUser(session.data?.user?.id as string);
@@ -46,7 +50,6 @@ const EditModal = () => {
   }, [session.data?.user?.profileImage, session.data?.user?.coverImage, session.data?.user?.name, session.data?.user?.username, session.data?.user?.bio, session.data?.user]);
   
   const [isLoading, setIsLoading] = useState(false);
-
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -72,8 +75,8 @@ const EditModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <ImageUpload value={profileImage} disabled={isLoading} onChange={(image) => setProfileImage(image)} label="Upload profile image" />
-      <ImageUpload value={coverImage} disabled={isLoading} onChange={(image) => setCoverImage(image)} label="Upload cover image" />
+      <ImageUpload value={profileImage} disabled={isLoading} onChange={(image) => setProfileImage(image)} label="Upload profile image (Limited to < 1mb in size)" />
+      <ImageUpload value={coverImage} disabled={isLoading} onChange={(image) => setCoverImage(image)} label="Upload cover image (Limited to < 1mb in size)" />
       <Input
         placeholder="Name"
         onChange={(e) => setName(e.target.value)}
