@@ -6,6 +6,7 @@ import { RxCalendar } from 'react-icons/rx';
 
 import useEditModal from '@/hooks/useEditModal';
 import useUser from '@/hooks/useUser';
+import useFollow from '@/hooks/useFollow';
 
 type Props = {
   userId: string
@@ -17,6 +18,8 @@ const UserBio = ({ userId }: Props) => {
 
   const editModal = useEditModal()
 
+  const {isFollowing, toggleFollow} = useFollow(userId)
+
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
       return null;
@@ -24,7 +27,7 @@ const UserBio = ({ userId }: Props) => {
 
     return format(new Date(fetchedUser.createdAt), 'MMMM yyyy');
   }, [fetchedUser?.createdAt])
-
+  console.log(session)
   return (
     <div className='border-b-[1px] border-neutral-800 pb-4'>
       <div className='flex justify-end p-2'>
@@ -33,8 +36,8 @@ const UserBio = ({ userId }: Props) => {
             Edit
             </Button>
         ) : (
-            <Button variant='secondary' onClick={() => { }}>
-              Follow
+            <Button variant={isFollowing ? 'secondary' : 'default'} onClick={toggleFollow} border={isFollowing ? "outline" : "default"}>
+              {isFollowing ? 'Unfollow' : 'Follow'}
             </Button>
         )}
       </div>

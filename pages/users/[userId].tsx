@@ -2,8 +2,8 @@ import Header from "@/components/Header"
 import useUser from "@/hooks/useUser"
 import { useRouter } from "next/router"
 import { ClipLoader } from "react-spinners"
-import UserHero from "./UserHero"
-import UserBio from "./UserBio"
+import UserHero from "@/components/users/UserHero"
+import UserBio from "@/components/users/UserBio"
 import PostFeed from "@/components/Posts/PostFeed"
 
 const UserProfile = () => {

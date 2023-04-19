@@ -15,6 +15,10 @@ type Props = {
   postId?: string
 }
 
+/*
+TODO: Implement rate limiting using upstash
+*/
+
 const Form = ({ placeholder, isComment, postId }: Props) => {
   const session = useSession()
   const loginModal = useLoginModal()

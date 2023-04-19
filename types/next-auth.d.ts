@@ -12,6 +12,7 @@ declare module "next-auth" {
       coverImage: string,
       profileImage: string,
       username: string,
+      followingIds: string[],
     } & DefaultSession["user"]
   }
 }
