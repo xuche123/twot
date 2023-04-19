@@ -34,7 +34,7 @@ const LoginModal = () => {
       }
       toast({
         title: 'Success',
-        description: 'Your ahve been logged in.',
+        description: 'Your have been logged in.',
       })
 
       loginModal.close();

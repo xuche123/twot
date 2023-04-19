@@ -56,7 +56,7 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
-      {session.data ? (
+      {session.data && ( 
         <div className="flex flex-row gap-4">
           <div>
             <AvatarIcon userId={session.data?.user?.id} />
@@ -95,18 +95,6 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
                 Twoot
               </Button>
             </div>
-          </div>
-        </div>
-      ) : (
-        <div className="py-8">
-          <h1 className="text-white text-2xl text-center mb-4 font-bold">Welcome to Twitter</h1>
-          <div className="flex flex-row items-center justify-center gap-4">
-              <Button onClick={loginModal.open}>
-                Login
-              </Button>
-              <Button onClick={registerModal.open} variant="secondary">
-                Register
-              </Button>
           </div>
         </div>
       )}
