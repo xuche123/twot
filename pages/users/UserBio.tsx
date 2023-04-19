@@ -1,9 +1,11 @@
 import { useSession } from 'next-auth/react';
 import { format } from 'date-fns';
-import useUser from '@/hooks/useUser';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { RxCalendar } from 'react-icons/rx';
+
+import useEditModal from '@/hooks/useEditModal';
+import useUser from '@/hooks/useUser';
 
 type Props = {
   userId: string
@@ -13,6 +15,8 @@ const UserBio = ({ userId }: Props) => {
   const session = useSession()
   const { data: fetchedUser } = useUser(userId)
 
+  const editModal = useEditModal()
+
   const createdAt = useMemo(() => {
     if (!fetchedUser?.createdAt) {
       return null;
@@ -21,12 +25,11 @@ const UserBio = ({ userId }: Props) => {
     return format(new Date(fetchedUser.createdAt), 'MMMM yyyy');
   }, [fetchedUser?.createdAt])
 
-
   return (
     <div className='border-b-[1px] border-neutral-800 pb-4'>
       <div className='flex justify-end p-2'>
         {session.data?.user?.id === userId ? (
-          <Button variant='secondary' onClick={() => { }}>
+          <Button variant='secondary' onClick={editModal.open}>
             Edit
             </Button>
         ) : (

@@ -32,6 +32,10 @@ const LoginModal = () => {
       if (response?.error) {
         throw new Error(response.error);
       }
+      toast({
+        title: 'Success',
+        description: 'Your ahve been logged in.',
+      })
 
       loginModal.close();
     } catch (error) {
