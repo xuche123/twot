@@ -41,11 +41,11 @@
 //         description: 'success',
 //       });
 //     } catch (error) {
-//       toast({
-//         variant: 'destructive',
-//         title: 'Error',
-//         description: "Couldn't follow/unfollow",
-//       })
+      // toast({
+      //   variant: 'destructive',
+      //   title: 'Error',
+      //   description: "Couldn't follow/unfollow",
+      // })
 //     }
 //   }, [session?.data?.user, loginModal, isFollowing, mutateFetchedUser, toast, userId]);
 
@@ -57,17 +57,18 @@
 
 // export default useFollow;
 
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 import { useCallback, useMemo } from "react";
-import { toast } from "react-hot-toast";
+import { useToast } from "./useToast";
 
 import useCurrentUser from "./useCurrentUser";
 import useLoginModal from "./useLoginModal";
 import useUser from "./useUser";
 
 const useFollow = (userId: string) => {
-  const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser();
+  const { data: currentUser, mutate: mutateCurrentUser } = useCurrentUser(true);
   const { mutate: mutateFetchedUser } = useUser(userId);
+  const { toast } = useToast();
 
   const loginModal = useLoginModal();
 
@@ -95,11 +96,18 @@ const useFollow = (userId: string) => {
       mutateCurrentUser();
       mutateFetchedUser();
 
-      toast.success('Success');
+      toast({
+        title: isFollowing ? 'Unfollowed' : 'Followed',
+        description: 'success',
+      });
     } catch (error) {
-      toast.error('Something went wrong');
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: "Couldn't follow/unfollow",
+      })
     }
-  }, [currentUser, isFollowing, userId, mutateCurrentUser, mutateFetchedUser, loginModal]);
+  }, [currentUser, loginModal, isFollowing, mutateCurrentUser, mutateFetchedUser, toast, userId]);
 
   return {
     isFollowing,
