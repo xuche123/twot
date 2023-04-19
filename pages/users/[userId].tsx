@@ -3,6 +3,7 @@ import useUser from "@/hooks/useUser"
 import { useRouter } from "next/router"
 import { ClipLoader } from "react-spinners"
 import UserHero from "./UserHero"
+import UserBio from "./UserBio"
 
 const UserProfile = () => {
   const router = useRouter()
@@ -22,6 +23,7 @@ const UserProfile = () => {
     <>
       <Header label={fetchedUser?.username} back />
       <UserHero userId={userId as string} />
+      <UserBio userId={userId as string} />
     </>
   )
 }
