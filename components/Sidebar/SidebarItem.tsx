@@ -1,25 +1,35 @@
 import router from "next/router"
 import { useCallback } from "react"
 import { IconType } from "react-icons/lib"
+import { useSession } from "next-auth/react"
+import useLoginModal from "@/hooks/useLoginModal"
 
 type Props = {
   label: string
   href?: string
   icon: IconType
   onClick?: () => void
+  auth?: boolean
 }
 
 
-const SidebarItem = ({ label, href, icon: Icon, onClick }: Props) => {
-  const handleClick = useCallback(
-  () => {
+const SidebarItem = ({ label, href, icon: Icon, onClick, auth }: Props) => {
+  const loginModal = useLoginModal()
+  const session = useSession()
+
+  
+  const handleClick = useCallback(() => {
     if (onClick) {
       onClick()
     }
-    if (href) {
+
+    if (auth && !session.data) {
+      loginModal.open()
+    }
+    else if (href) {
       router.push(href)  
     }
-  },[href, onClick],)
+  },[auth, href, loginModal, onClick, session.data],)
 
   return (
     <div onClick={handleClick} className="flex flex-row items-center">

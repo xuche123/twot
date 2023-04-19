@@ -40,6 +40,7 @@ const Sidebar = () => {
                 href={item.href} 
                 icon={item.icon} 
                 label={item.label}
+                auth={item.auth}
               />
             ))}
             {session.data && <SidebarItem onClick={() => signOut()} icon={RxExit} label="Logout" />}
