@@ -45,6 +45,8 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
         title: 'Error',
         description: "Something went wrong. Please try again later.",
       })
+    } finally {
+      setIsLoading(false)
     }
   }, [body, mutatePosts, toast])
 
