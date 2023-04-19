@@ -1,13 +1,13 @@
 import { RxHome, RxBell, RxPerson, RxExit } from 'react-icons/rx'
 import { signOut } from 'next-auth/react';
-import useCurrentUser from '@/hooks/useCurrentUser';
 
 import SidebarItem from './SidebarItem';
 import SidebarLogo from './SidebarLogo';
 import SidebarTweetButton from './SidebarTwootButton';
+import { useSession } from 'next-auth/react';
 
 const Sidebar = () => {
-  const { data: currentUser } = useCurrentUser();
+  const session = useSession();
 
   const items = [
     {
@@ -20,12 +20,11 @@ const Sidebar = () => {
       label: 'Notifications',
       href: '/notifications',
       auth: true,
-      alert: currentUser?.hasNotification
     },
     {
       icon: RxPerson,
       label: 'Profile',
-      href: `/users/${currentUser?.id}`,
+      href: `/users/${session.data?.user?.id}`,
       auth: true,
     },
   ]
@@ -38,14 +37,12 @@ const Sidebar = () => {
             {items.map((item) => (
               <SidebarItem
                 key={item.href}
-                // alert={item.alert}
-                // auth={item.auth}
                 href={item.href} 
                 icon={item.icon} 
                 label={item.label}
               />
             ))}
-            {currentUser && <SidebarItem onClick={() => signOut()} icon={RxExit} label="Logout" />}
+            {session.data && <SidebarItem onClick={() => signOut()} icon={RxExit} label="Logout" />}
             <SidebarTweetButton />
           </div>
         </div>

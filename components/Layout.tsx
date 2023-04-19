@@ -1,4 +1,4 @@
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar/Sidebar'
 import Followbar from './Followbar'
 
 type Props = {

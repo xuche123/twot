@@ -17,6 +17,8 @@ const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   });
 
+  console.log('currentUser', currentUser)
+
   if (!currentUser) {
     throw new Error('Not signed in');
   }

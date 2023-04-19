@@ -25,6 +25,8 @@ export const authOptions: AuthOptions = {
           }
         });
 
+        console.log(user)
+
         if (!user || !user?.hashedPassword) {
           throw new Error('Invalid credentials');
         }
@@ -39,7 +41,7 @@ export const authOptions: AuthOptions = {
         }
 
         return user;
-      }
+      },
     })
   ],
   debug: process.env.NODE_ENV === 'development',
@@ -50,6 +52,16 @@ export const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    jwt: async ({ token, user }) => {
+        user && (token.user = user)
+        return token
+    },
+    session: async ({ session, token }) => {
+      session.user = token.user as any
+      return session
+    }
+  }
 };
 
 export default NextAuth(authOptions);

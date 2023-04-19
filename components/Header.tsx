@@ -1,6 +1,5 @@
 import { useRouter } from "next/router"
 import { RxArrowLeft } from "react-icons/rx"
-import useCurrentUser from "@/hooks/useCurrentUser"
 
 type Props = {
   label: string
@@ -9,7 +8,6 @@ type Props = {
 
 const Header = ({ label, back }: Props) => {
   const router = useRouter()
-  const { data: currentUser } = useCurrentUser();
 
   const handleBack = () => {
     router.push("/")
@@ -22,7 +20,7 @@ const Header = ({ label, back }: Props) => {
             <RxArrowLeft size={28} color="white" />
           </div>
         )}
-        <h1 className="text-white text-semibold text-xl">{label} {currentUser?.name}</h1>
+        <h1 className="text-white text-semibold text-xl">{label}</h1>
       </div>
 
     </div>
