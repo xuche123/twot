@@ -100,7 +100,7 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
             />
             <div className="mt-4 flex flex-row justify-end">
               <Button disabled={isLoading || !body} onClick={onSubmit}>
-                Tweet
+                Twoot
               </Button>
             </div>
           </div>

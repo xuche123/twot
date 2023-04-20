@@ -23,7 +23,7 @@ const SidebarTweetButton = ({}: Props) => {
       </div>
       {/*desktop view: show the icon and the text */}
       <div className="hidden lg:block mt-6 rounded-full px-4 py-2 bg-sky-500 hover:bg-opacity-80 transition cursor-pointer">
-        <p className="hidden lg:block text-center text-white font-semibold text-lg">Tweet</p>
+        <p className="hidden lg:block text-center text-white font-semibold text-lg">Twoot</p>
       </div>
     </div>
     
