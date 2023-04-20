@@ -6,6 +6,7 @@ import { formatDistanceToNowStrict } from 'date-fns';
 import { AvatarIcon } from "../AvatarIcon";
 import { AiOutlineMessage } from 'react-icons/ai';
 import { RxHeartFilled, RxHeart } from "react-icons/rx";
+import useLike from "@/hooks/useLike";
 
 type Props = {
   userId?: string
@@ -15,6 +16,7 @@ type Props = {
 const PostItem = ({ userId, data }: Props) => {
   const router = useRouter();
   const loginModal = useLoginModal()
+  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId});
 
   const session = useSession()
 
@@ -29,8 +31,12 @@ const PostItem = ({ userId, data }: Props) => {
 
   const onLike = useCallback((event:any) => {
     event.stopPropagation()
-    loginModal.open()
-  }, [loginModal])
+    if (!session?.data?.user?.id) {
+      return loginModal.open();
+    }
+
+    toggleLike();
+  }, [loginModal, session?.data?.user?.id, toggleLike])
 
   const createdAt = useMemo(() => {
     if (!data?.createdAt) {
@@ -112,7 +118,7 @@ const PostItem = ({ userId, data }: Props) => {
                 transition 
                 hover:text-red-500
             ">
-              <RxHeart size={20} />
+              {hasLiked ? <RxHeartFilled size={20} color="red"/> : <RxHeart size={20} />}
               <p>
                 {data.likedIds.length}
               </p>

@@ -3,7 +3,7 @@ import { signOut } from 'next-auth/react';
 
 import SidebarItem from './SidebarItem';
 import SidebarLogo from './SidebarLogo';
-import SidebarTweetButton from './SidebarTwootButton';
+import SidebarTweetButton from './SidebarTweetButton';
 import { useSession } from 'next-auth/react';
 
 const Sidebar = () => {
