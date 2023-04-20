@@ -9,7 +9,6 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 
 const Sidebar = () => {
   const session = useSession();
-  // console.log(session)
   const { data: currentUser } = useCurrentUser(true);
 
   const items = [
@@ -23,7 +22,7 @@ const Sidebar = () => {
       label: 'Notifications',
       href: '/notifications',
       auth: true,
-      alert: currentUser?.hasNotifications,
+      alert: currentUser?.hasNotification,
     },
     {
       icon: RxPerson,
