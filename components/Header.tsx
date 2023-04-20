@@ -13,7 +13,7 @@ const Header = ({ label, back }: Props) => {
     router.push("/")
   }
   return (
-    <div className="border-b-[1px] border-neutral-800 p-5">
+    <div className="border-b-[1px] border-neutral-800 p-5 sticky top-0 backdrop-blur-xl z-50">
       <div className="flex flex-row items-center gap-2">
         {back && (
           <div onClick={handleBack} className="cursor-pointer transition hover:opacity-70">
