@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useToast } from "@/hooks/useToast";
 import { Textarea } from "../ui/textarea";
 
+import useCurrentUser from "@/hooks/useCurrentUser";
 import { useSession } from "next-auth/react";
 import useEditModal from "@/hooks/useEditModal";
 import useUser from "@/hooks/useUser";
@@ -18,6 +19,8 @@ TODO : Right now request is limited to 1mb, need to increase it.
 */
 const EditModal = () => {
   const session = useSession();
+  const { data: currentUser } = useCurrentUser(true);
+
   const { mutate: mutateFetchedUser } = useUser(session.data?.user?.id as string);
   const editModal = useEditModal();
   const { toast } = useToast();
@@ -28,26 +31,13 @@ const EditModal = () => {
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
 
-  useEffect(() => {
-    if (!session.data?.user) {
-      return;
-    }
-    if (session.data?.user?.profileImage) {
-      setProfileImage(session.data?.user?.profileImage)
-    }
-    if (session.data?.user?.coverImage) {
-      setCoverImage(session.data?.user?.coverImage)
-    }
-    if (session.data?.user?.name) {
-      setName(session.data?.user?.name)
-    }
-    if (session.data?.user?.username) {
-      setUsername(session.data?.user?.username)
-    }
-    if (session.data?.user?.bio) {
-      setBio(session.data?.user?.bio)
-    }
-  }, [session.data?.user?.profileImage, session.data?.user?.coverImage, session.data?.user?.name, session.data?.user?.username, session.data?.user?.bio, session.data?.user]);
+   useEffect(() => {
+    setProfileImage(currentUser?.profileImage)
+    setCoverImage(currentUser?.coverImage)
+    setName(currentUser?.name)
+    setUsername(currentUser?.username)
+    setBio(currentUser?.bio)
+  }, [currentUser?.name, currentUser?.username, currentUser?.bio, currentUser?.profileImage, currentUser?.coverImage]);
   
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = useCallback(async () => {

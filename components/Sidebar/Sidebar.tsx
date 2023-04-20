@@ -5,9 +5,12 @@ import SidebarItem from './SidebarItem';
 import SidebarLogo from './SidebarLogo';
 import SidebarTweetButton from './SidebarTweetButton';
 import { useSession } from 'next-auth/react';
+import useCurrentUser from '@/hooks/useCurrentUser';
 
 const Sidebar = () => {
   const session = useSession();
+  // console.log(session)
+  const { data: currentUser } = useCurrentUser(true);
 
   const items = [
     {
@@ -20,6 +23,7 @@ const Sidebar = () => {
       label: 'Notifications',
       href: '/notifications',
       auth: true,
+      alert: currentUser?.hasNotifications,
     },
     {
       icon: RxPerson,
@@ -41,6 +45,7 @@ const Sidebar = () => {
                 icon={item.icon} 
                 label={item.label}
                 auth={item.auth}
+                alert={item.alert}
               />
             ))}
             {session.data && <SidebarItem onClick={() => signOut()} icon={RxExit} label="Logout" />}
