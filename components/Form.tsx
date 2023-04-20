@@ -8,6 +8,7 @@ import { useCallback, useState } from "react"
 import { useToast } from "@/hooks/useToast"
 import { Button } from "./ui/button"
 import { AvatarIcon } from "./AvatarIcon"
+import usePost from "@/hooks/usePost"
 
 type Props = {
   placeholder: string
@@ -26,6 +27,8 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
   const { toast } = useToast()
 
   const { mutate: mutatePosts } = usePosts()
+  const { mutate: mutatePost } = usePost(postId as string);
+
   
   const [body, setBody] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -33,8 +36,9 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true)
+      const url = isComment ? `/api/comments?postId=${postId}` : '/api/posts';
 
-      await axios.post('/api/posts', { body })
+      await axios.post(url, { body })
 
       toast({
         title: 'Success',
@@ -43,6 +47,7 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
 
       setBody('')
       mutatePosts()
+      mutatePost()
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -52,11 +57,14 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
     } finally {
       setIsLoading(false)
     }
-  }, [body, mutatePosts, toast])
+  }, [body, isComment, mutatePost, mutatePosts, postId, toast])
+
+  if (!session.data) {
+    return null
+  }
 
   return (
     <div className="border-b-[1px] border-neutral-800 px-5 py-2">
-      {session.data && ( 
         <div className="flex flex-row gap-4">
           <div>
             <AvatarIcon userId={session.data?.user?.id} />
@@ -97,7 +105,6 @@ const Form = ({ placeholder, isComment, postId }: Props) => {
             </div>
           </div>
         </div>
-      )}
     </div>
   )
 }
